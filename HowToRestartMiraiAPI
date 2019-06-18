@@ -1,0 +1,22 @@
+1) Login to Cloud Instance
+  gcloud compute --project "jts-board" ssh --zone "asia-northeast1-b" "flask-all"
+
+2) Go to correct user
+  sudo su -
+  su - manishkumar_zed
+ 
+3) Stop Cron
+  crontab -e
+  Comment this line "* * * * * /home/manishkumar_zed/cron.sh"
+
+4) ps -ef | grep main
+
+5) kill -9 (2 process ids you got from previous command)
+
+6) Restart Cron
+  crontab -e
+  Uncomment the same line
+
+7) Wait for 1 minute
+
+  
