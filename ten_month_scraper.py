@@ -25,12 +25,12 @@ def scrap(room_types):
     time.sleep(3)
 
     id1 = driver.find_element_by_name("f_id")
-    #id1.send_keys("29298929")
-    id1.send_keys("first-t")
+    id1.send_keys("29298929")
+    #id1.send_keys("first-t")
 
     pw = driver.find_element_by_name("f_pass")
-    #pw.send_keys("sui@8801")
-    pw.send_keys("first-76")
+    pw.send_keys("sui@8801")
+    #pw.send_keys("first-76")
 
     submit = driver.find_element_by_xpath("/html/body/table/tbody/tr/td/table[1]/tbody/tr/td/table/tbody/tr/td/table/tbody/tr[1]/td/table/tbody/tr[2]/td/form/table/tbody/tr[2]/td[3]/input")
     
@@ -147,9 +147,14 @@ def scrap(room_types):
 
                     day = 0 
                     for col in cols:
+                        #print(col.text)
+                        #sys.exit()
+
                         
                         if col != cols[0] and col.text != '' and col.text != ' ' and col.text != '済': # This special symbol means 'already'
 
+                            print(col.text)
+                            #sys.exit()
                             print("######  COLUMN " + str(colcount) + " ######") 
                             
                             print("Room Type ID")
@@ -158,18 +163,37 @@ def scrap(room_types):
                             print("Room Type Name")
                             print(first_col_second)
 
+
                             #print("StockFull")
                             #print(col.text)
 
                             coltextarray = col.text.split('/')
-                            col_text_first = coltextarray[0]
-                            col_text_second = coltextarray[0] 
+
+                            print("00000000")
+                            print(coltextarray)
+                            print("00000000")
+
+
+                            if coltextarray[0] != "":
+                                print("if")
+                                col_text_first = coltextarray[0]
+                                col_text_second = coltextarray[1] 
+                            else:
+                                print("else")
+                                col_text_first = coltextarray[1]
+                                col_text_second = coltextarray[1] 
 
                             print("Stock")
                             print(col_text_first)
                             print("Reservations")
                             print(col_text_second)
                             
+                            cf = int(col_text_first)
+                            cs = int(col_text_second)
+                            
+                            on = 0
+                            if cs < cf:
+                                on = 1
                             
                             print("Date")
                             date = base + day
@@ -189,7 +213,8 @@ def scrap(room_types):
                                 "room_type_id": first_col_first,
                                 "room_type_name": first_col_second,
                                 "room_stock": col_text_first,
-                                "reservations": col_text_second
+                                "reservations": col_text_second,
+                                "on": on
                             }
 
                             my_list.append(my_dict)
@@ -200,4 +225,4 @@ def scrap(room_types):
             rowcount += 1
     driver.quit()
 
-scrap(8)
+scrap(3)
